@@ -10,6 +10,7 @@ const setSecretNum = () => {
 
 setSecretNum();
 
+// Again button
 document.querySelector('.again').addEventListener('click', () => {
   score = 20;
   setSecretNum();
@@ -21,6 +22,22 @@ document.querySelector('.again').addEventListener('click', () => {
   document.querySelector('.score').textContent = score;
 });
 
+// Check guess
+
+const checkGuess = (guess, secretNumber) => {
+  if (score > 0) {
+    document.querySelector('.message').textContent =
+      guess > secretNumber
+        ? 'Your guess is too high!'
+        : 'Your guess is too low!';
+    score--;
+    document.querySelector('.score').textContent = score;
+  } else {
+    document.querySelector('.message').textContent = 'You lose!';
+  }
+};
+
+// Check button
 document.querySelector('.check').addEventListener('click', () => {
   const guess = Number(document.querySelector('.guess').value);
 
@@ -37,26 +54,7 @@ document.querySelector('.check').addEventListener('click', () => {
     if (score > highScore) {
       document.querySelector('.highscore').textContent = score;
     }
-  } else if (guess > secretNumber) {
-    // Guess too high
-
-    if (score > 0) {
-      document.querySelector('.message').textContent =
-        'Your guess is too high!';
-      score--;
-      document.querySelector('.score').textContent = score;
-    } else {
-      document.querySelector('.message').textContent = 'You lose!';
-    }
-  } else if (guess < secretNumber) {
-    //  Guess to low
-
-    if (score > 0) {
-      document.querySelector('.message').textContent = 'Your guess is too low!';
-      score--;
-      document.querySelector('.score').textContent = score;
-    } else {
-      document.querySelector('.message').textContent = 'You lose!';
-    }
+  } else {
+    checkGuess(guess, secretNumber);
   }
 });
